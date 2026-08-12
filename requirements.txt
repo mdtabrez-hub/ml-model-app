@@ -1,0 +1,21 @@
+# Crop Recommendation System — deployment requirements
+#
+# scikit-learn MUST stay pinned to 1.6.1: that is the version that built
+# crop_model_v2.pkl. Leaving it unpinned lets the host install a newer release,
+# which unpickles the model with an InconsistentVersionWarning and is not
+# guaranteed to produce the same predictions. Verified: 1.6.1 loads this file
+# with no warnings at all.
+#
+# If you ever retrain the model, run `python -c "import sklearn; print(sklearn.__version__)"`
+# in the environment where you trained it and put that exact version here.
+
+streamlit>=1.30
+scikit-learn==1.6.1
+numpy<2.3
+pandas>=2.0
+joblib>=1.3
+
+# Per-recommendation explanations. Optional — the app detects its absence and
+# falls back to global feature importances. Remove this line if the deployment
+# build fails on numba/llvmlite wheels.
+shap>=0.44
